@@ -1,0 +1,78 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\usepackage{placeins}
+\usepackage{ amssymb }
+\usepackage{verbatim}
+
+\begin{document}
+\newcommand{\Lagr}{\mathcal{L}}
+\newcommand{\Ztran}{\mathcal{Z}}
+
+\title{Control Theory: Theory and Applications for Robotics}
+\subtitle{Including Tricks Learned on the Job}
+\author{Maverick Zhang}
+\date{\today}
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+This is a paper that I hope will introduce new members to the UC Berkeley and M.I.T. Robotics group to the necessary mathematics and ideas in order to help us out with controlling the robots. A lot of fields intersect at robotics, the biggest of which are mathematics, physics, electrical engineering, mechanical engineering, and computer science. Whenever somebody writes a reference document of some kind, they are always going to be agonizing over how much is too much or too little. The more broad the content, the more easily a person completely unfamiliar to the current field will be able to learn it. The more strict the content, the less. Unfortunately, the tradeoff is that it takes far more effort to cover. 
+
+	My current plans for this introductory paper will be getting somebody who understands at least AP Calculus BC, and AP Physics C up to the level of a somebody who can intuitively make choices in robotics control theory. As such, I will be making sure understanding (even if it is not rigorous) is put first before rigorous theory. Eventually, sections that are completely rigorous will be written to shore up gaps in understanding. 
+
+	I have to say, while control theory may seem a difficult mathematical creature, the best way to learn it is to play with it yourself. I will be adding notes that will challenge you to understand a concept through experiment, which is the way this theory should be learned.
+
+	I recommend you read this book in passes. The first pass is the skim. You read quickly trying to understand the ideas behind control theory and robotics. The second pass you should certainly pay closer attention, probably reading proofs in depth and taking as long as it needs to completely explain the proof without this as a reference. Any further passes should be done to ensure you have complete understanding and shoring up any weak points.
+
+\section{A Fixer Upper: All The Math And Physics You Need Refreshed From High School}
+
+Okay, time to level with you, your Calc BC or Physics C teacher might've been great, but they had a strict timeline to stick to and didn't let you explore some ideas behind these beautiful subjects. I hope that in this section we can get a little more acquainted with these two fields and also remember them a bit better. 
+
+\subsection{Calculus, But Better}
+
+Calculus is a humongous subject. Most of you guys who finished calculus probably thought, ``Wow, that was hard, now it's time to forget all about it," or maybe, ``When am I ever going to use this subject?" Both of these responses are perfectly fine, but I hope that I can at least answer the second question. 
+
+	I think we all agree that word problems in calculus suuuuuuck. It's like, I know you're just disguising a math problem with words to prevent me from answering faster, and that nothing in real life ever uses calculus this way. Well, now let's try to come up with plausible ways to use it. In addition, I want to recast some ideas in calculus in a different perspective.
+
+\subsubsection{Derivatives}
+
+We can think of calculus as the mathematics behind approximation. Others might say change, but it is more fundamentally the former. As you should hopefully remember, the main two ingredients in calculus are derivatives and integrals, but I think the third ingredient is *drumroll* \ldots Taylor Series!
+
+	I can hear you groaning already. Good thing we won't be using them as annoyingly this time around. The great thing about Taylor series, however much you hate them, is that they are a perfect illustration of this reinterpretation of calculus. The Taylor seriees shows you perfectly how calculus approximates, so let's recast derivatives in terms of these Taylor Series.
+
+	The formula for Taylor series is 
+
+\[
+\sum_{n=0}^{\infty}\frac{f^{(n)}(c)(x-c)^n}{n!}
+\]
+which is a basically creates an infinite series made of simple terms power functions that will approximate (most) functions rather well around a point $c.$ For some functions like $\sin(x)$ or $e^x$, this approximation will eventually approximate the function over all of $\mathbb{R}$, while with other functions like $1/(1-x)$ it will only work from $(-1,1)$. However, for our purposes, we won't be concerning ourselves with the crazy functions that don't have Taylor series (like $e^{-1/x^2}$ around $0$). Instead, we will only remark that Taylor series approximate a function really well around a certain point. 
+
+	The existence of Taylor series is intuitive enough, but just because we have an idea doesn't mean it's practical. So with Taylor series, what can we do to understand it better?
+
+	Let's try to understand what happens when we forget about a huge portion of the series. We chop it off after $n=0$. Alright, so what does our Taylor series do for us? We approximate a function $f$ near $c$ to find that the best approximation is
+
+\[
+f(x) \approx f(c) \quad \text{when $x$ is near $c.$}
+\]
+
+%%%Add graph of this%%%
+
+	That's pretty unexciting. I think everybody understands that if you want to approximate a function near a point, you can just use that point. What happens when we chop off the Taylor series at $n=1$? We will find something known as the \vocab{first order approximation} to the function:
+
+\[
+f(x) \approx f(c) + f'(c)(x-c) \quad \text{when $x$ is near $c.$}
+\] 
+
+	I think we all agree that this is more exciting. This function is linear in $x$. It is known as the tangent line approximation because it is the line that best kisses the graph at this point. If we examine a graph, it is quite clear that this approximation will let you venture a little bit further than the previous one when approximating. It is from this expression that we can also see why the derivative is so important as the tool of approximation, it is the slope of the tangent line. However, this also shows us 
+
+%%%Add Tangent Line%%%
+	
+
+
+ 
+
+\end{document}
