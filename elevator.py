@@ -53,14 +53,19 @@ class elevator:
     
     D = np.asmatrix([[0.0]])
     
-    Q = np.asmatrix([[3.0 ** 2, 0.0],
-                     [0.0, 1.5 ** 2]])
+    Q_lqr = np.asmatrix([[3.0 ** 2, 0.0],
+                         [0.0, 1.5 ** 2]])
+    
+    Q_kal = np.asmatrix([[.01 ** 2, 0.0],
+                         [0.0, .01 ** 2]])
     
     R = np.asmatrix([[0.001 ** 2]])
     
     self.minU = np.asmatrix([[-V_max]])
     self.maxU = np.asmatrix([[V_max]])    
-    A, B = controls.c2d(A_c, B_c, 0.005)
+    A, B, Q_d, R_d = controls.c2d(A_c, B_c, 0.005, Q_lqr, R)
+    
+    A, B, Q_kalman, R_d = controls.c2d(A_c, B_c, 0.005, Q_kal, R)
     
     self.dt = 0.005
     
@@ -74,13 +79,13 @@ class elevator:
     #self.controller.L = controls.place(A.T, C.T, (-0.61939275,  0.98497246)).T
     
     #LQG
-    self.K = controls.dlqr(A, B, Q, R)
+    self.K = controls.dlqr(A, B, Q_d, R_d)
     
     print(np.linalg.eig(A - B * self.K))
     
-    self.Kff = controls.feedforwards(A, B, Q)
+    self.Kff = controls.feedforwards(A, B, Q_d)
     
-    self.controller.L = controls.dkalman(A, C, Q, R)
+    self.controller.L = controls.dkalman(A, C, Q_kalman, R_d)
     
     print(np.linalg.eig(A.T - C.T * self.controller.L.T))
     
@@ -99,7 +104,7 @@ class elevator:
     """
     
     if use_observer:
-      self.controller.X_hat = initial_X + 0.3
+      self.controller.X_hat = initial_X + 0.03
     t = []
     y = []
     v = []
@@ -195,7 +200,7 @@ class elevator:
 def main():
   elev = elevator()
   
-  elev.run_test(np.asmatrix([[0.0],[0.0]]), np.asmatrix([[60.0],[0.]]), False)
+  elev.run_test(np.asmatrix([[0.0],[0.0]]), np.asmatrix([[60.0],[0.]]))
   #elev.run_pid_test((1, 0., 0.), np.asmatrix([[0.0],[0.0]]), np.asmatrix([[60.0],[0.]]), False, 4000)
     
         
